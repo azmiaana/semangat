@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quotes with Photos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+    }
+    body {
+      background-color: #0a0f1a;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background-color: #111827;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      transition: background 0.5s ease;
+      user-select: none;
+    }
+    .container.left .quote {
+      order: 2;
+      text-align: left;
+    }
+    .container.left .photo {
+      order: 1;
+    }
+    .container.right .quote {
+      order: 1;
+      text-align: right;
+    }
+    .container.right .photo {
+      order: 2;
+    }
+    .photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 20px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.7);
+      transition: transform 0.3s ease;
+    }
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .quote {
+      font-size: 1.5rem;
+      line-height: 1.4;
+      flex: 1;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+    button {
+      margin-top: 25px;
+      background-color: #2563eb;
+      border: none;
+      color: white;
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #1e40af;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        flex-direction: column;
+        text-align: center;
+      }
+      .container.left .quote,
+      .container.right .quote {
+        order: 2;
+        text-align: center;
+      }
+      .container.left .photo,
+      .container.right .photo {
+        order: 1;
+        margin-bottom: 20px;
+      }
+      .photo {
+        width: 140px;
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="quoteContainer" class="container left">
+    <div class="photo">
+      <img id="photo" src="jakey jakey.jfif" alt="Photo 1" />
+    </div>
+    <div id="quote" class="quote">"Kamu hebat karena tetap bertahan sejauh ini."</div>
+  </div>
+
+  <button onclick="nextQuote()">Next Quote</button>
+
+  <script>
+    const quotes = [
+      "Hidup adalah lukisan yang tak pernah usai, dan cinta adalah warna yang memberi makna pada setiap goresannya; teruslah melukis dengan semangat walau awan gelap datang menghampiri.",
+      "Di setiap detak jantung yang berbisik, ada nyala semangat yang tak pernah padam, dan cinta adalah api yang menyulutnya, membakar rasa takut jadi keberanian.",
+      "Semangat hidup adalah lagu yang dinyanyikan jiwa dalam hening malam, dan cinta adalah melodi lembut yang menemani memberi arti dalam tiap nada yang terlantun.",
+      "Tatkala badai menghantam dan dunia seakan menyerah, semangat dan cinta adalah jangkar yang menahan agar kita tetap bertahan menatap cakrawala dengan harapan tak lekang waktu.",
+      "Kalau lelah, ingat kenapa kamu mulai.",
+      "Semangat terus untuk kehidupanmu, Nona, karena setiap hari adalah kesempatan baru menulis kisah penuh cinta dan harapan."
+    ];
+
+    const photos = [
+      "Jake (1).jfif",
+      "jake 2.jfif",
+      "jake.jfif",
+      "jakee.jfif",
+      "jakey jakey.jfif",
+      "𝖩𝖺𝗄𝖾 𝗮𝗻𝗱 𝖩𝗎𝗇𝗀𝗐𝗈𝗇.jfif"
+    ];
+
+    let index = 0;
+
+    function nextQuote() {
+      const quoteContainer = document.getElementById('quoteContainer');
+      const quoteEl = document.getElementById('quote');
+      const photoEl = document.getElementById('photo');
+
+      // Fade out
+      quoteEl.style.opacity = 0;
+      photoEl.style.opacity = 0;
+
+      setTimeout(() => {
+        index = (index + 1) % quotes.length;
+
+        // Ganti quote dan foto
+        quoteEl.textContent = `"${quotes[index]}"`;
+        photoEl.src = photos[index];
+        photoEl.alt = `Photo ${index + 1}`;
+
+        // Ganti kelas container biar posisi foto/quote selang seling
+        if (index % 2 === 0) {
+          quoteContainer.classList.remove('right');
+          quoteContainer.classList.add('left');
+        } else {
+          quoteContainer.classList.remove('left');
+          quoteContainer.classList.add('right');
+        }
+
+        // Fade in
+        quoteEl.style.opacity = 1;
+        photoEl.style.opacity = 1;
+      }, 400);
+    }
+  </script>
+
+</body>
+</html>
